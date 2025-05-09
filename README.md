@@ -146,16 +146,3 @@ FastAPI provides automatic interactive API documentation:
 ## Database
 
 The application uses SQLite as the database engine. The database file (`personalregister.db`) is automatically created in the project root directory when the application starts.
-
-## Development
-
-To add new features or modify existing ones:
-
-1. Create a new branch
-2. Make your changes
-3. Write tests (if applicable)
-4. Submit a pull request
-
-## License
-
-[Add your license information here]

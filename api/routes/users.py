@@ -42,7 +42,7 @@ def add_users(users_data: list[UserBase], session: SessionDep) -> UsersResponse:
     created_users = []
     try:
         for user_data in users_data:
-            user = Users.from_orm(user_data)
+            user = Users.model_validate(user_data)  
             session.add(user)
             created_users.append(user)
         
@@ -69,12 +69,14 @@ def get_users(session: SessionDep) -> List[UserResponse]:
     return users
 
 # Delete a user
-@router.delete("/user/{user_id}")
+@router.delete("/user/{user_id}", response_model=dict)
 def delete_user(user_id: int, session: SessionDep) -> dict:
     user = session.get(Users, user_id)
     if not user:
-        raise HTTPException(status_code=404, detail=f"User {user_id} not found")
-    
+        raise HTTPException(
+            status_code=404,
+            detail=f"User with id {user_id} not found"
+        )
     session.delete(user)
     session.commit()
-    return {"message": f"User {user.email} deleted successfully"}
+    return {"message": f"User {user_id} deleted successfully"}
