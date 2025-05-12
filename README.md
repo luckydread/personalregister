@@ -1,15 +1,13 @@
 # Personal Register API
 
-A FastAPI-based REST API for managing user records with email validation and SQLite database storage.
+A FastAPI-based REST API for managing users
 
 ## Features
 
 - Create single or multiple users with email validation
-- Retrieve user information (single user or all users)
-- Update user details with email uniqueness validation
-- Delete users
+- Get all users
+- Delete a single user
 - SQLite database with SQLModel ORM
-- Input validation using Pydantic models
 - Email uniqueness enforcement
 - Automatic database creation and table setup
 
@@ -18,29 +16,11 @@ A FastAPI-based REST API for managing user records with email validation and SQL
 - Python 3.10 or higher
 - pip (Python package installer)
 
-## Project Structure
-
-```
-personalregister/
-├── api/
-│   └── routes/
-│       └── users.py         # User endpoints
-├── db/
-│   ├── utils/
-│   │   └── emailvalidator.py # Email validation utilities
-│   └── session.py           # Database session management
-├── models/
-│   └── models.py           # Data models
-├── main.py                 # FastAPI application
-├── requirements.txt        # Project dependencies
-└── README.md              # This file
-```
-
 ## Setup
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/luckydread/personalregister.git
    cd personalregister
    ```
 
@@ -109,40 +89,21 @@ The API will be available at `http://localhost:8000`
 - **GET** `/users/users`
 - Returns a list of all users
 
-#### Get User by ID
-- **GET** `/users/user/{user_id}`
-- Returns a single user by ID
-
-#### Update User
-- **PUT** `/users/user/{user_id}`
-- Updates user information
-- Request body:
-  ```json
-  {
-    "name": "John",
-    "surname": "Smith",
-    "email": "john.smith@example.com"
-  }
-  ```
-
 #### Delete User
 - **DELETE** `/users/user/{user_id}`
 - Deletes a user by ID
 
-### Error Handling
-
-The API returns appropriate HTTP status codes and error messages:
-
-- `400 Bad Request`: Invalid input or duplicate email
-- `404 Not Found`: User not found
-- `500 Internal Server Error`: Server-side errors
-
-### Interactive Documentation
-
-FastAPI provides automatic interactive API documentation:
-- Swagger UI: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
-
 ## Database
 
 The application uses SQLite as the database engine. The database file (`personalregister.db`) is automatically created in the project root directory when the application starts.
+
+## Tests
+
+- The test folder contains the following tests:
+
+1. test_root - Tests the root endpoint
+2. test_add_users_success - Tests adding a single user
+3. test_add_two_users_successfully - Tests adding two users at the same time
+4. test_add_users_duplicate_email - Tests that we can't add a user with a duplicate email
+5. test_get_users - Tests getting all users
+6. test_delete_user - Tests deleting a user

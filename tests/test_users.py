@@ -61,6 +61,7 @@ async def client_fixture(session: Session):
     
     app.dependency_overrides.clear()
 
+# Test root endpoint
 @pytest.mark.anyio
 async def test_root(client: AsyncClient):
     response = await client.get("/")
@@ -163,7 +164,7 @@ async def test_get_users(client: AsyncClient):
     assert any(user["email"] == "john@example.com" for user in users)
     assert any(user["email"] == "jon@example.com" for user in users)
     
-    
+# Test deleting a user
 @pytest.mark.anyio
 async def test_delete_user(client: AsyncClient):
     # Create a user first
@@ -178,8 +179,6 @@ async def test_delete_user(client: AsyncClient):
     assert create_response.status_code == 200
     created_user = create_response.json()["users"][0]
     user_id = created_user["id"]
-    
-    print(f"Created user with ID: {user_id}")
     
     # Delete user
     response = await client.delete(f"/users/user/{user_id}")
